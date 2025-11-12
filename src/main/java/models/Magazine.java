@@ -1,13 +1,12 @@
 package models;
 
 import java.time.LocalDate;
-import java.util.List;
 
-public class Magazine extends Book {
+public class Magazine extends LibraryMaterial {
     int release;
 
-    public Magazine(String title, String author, LocalDate publicationDate, int release) {
-        super(title, author, publicationDate);
+    public Magazine(String title, String author, LocalDate publicationDate, String isbn, int release) {
+        super(title, author, publicationDate, isbn);
         this.release = release;
     }
 
@@ -17,6 +16,6 @@ public class Magazine extends Book {
 
     @Override
     public String toString() {
-        return super.toString() + " with release " + getRelease();
+        return "Magazine " + super.getTitle() + super.toString() + " with release " + getRelease();
     }
 }

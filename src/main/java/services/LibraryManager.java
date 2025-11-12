@@ -1,52 +1,35 @@
 package services;
 
 import Exceptions.MaterialDoNotExists;
-import models.Book;
-import models.Encyclopedia;
-import models.Magazine;
+import models.LibraryMaterial;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LibraryManager {
-    List<Book> booksCollection;
+    Set<LibraryMaterial> materialCollection;
 
-    public LibraryManager(List<Book> booksCollection) {
-        this.booksCollection = booksCollection;
+    public LibraryManager(Set<LibraryMaterial> materialCollection) {
+        this.materialCollection = materialCollection;
     }
 
-    public List<Book> getBooksCollection() {
-        return booksCollection;
+    public Set<LibraryMaterial> getMaterialCollection() {
+        return materialCollection;
     }
 
-    public Book findBook(String title) {
-        for (Book book : getBooksCollection()) {
-            if (book.getTitle().equals(title)) {
-                return book;
-            }
-        }
-        throw new MaterialDoNotExists("This material does not exists.");
-
-        /*return getBooksCollection().stream()
-                .filter(book -> book.getTitle().equals(title))
+    public LibraryMaterial findByName(String title) {
+        return getMaterialCollection().stream()
+                .filter(material -> material.getTitle().equals(title))
                 .findFirst()
-                .orElseThrow(new MaterialDoNotExists("This material does not exists."));*/
-
+                .orElseThrow(() -> new MaterialDoNotExists("This material does not exists."));
     }
 
-    public String showAllBooksByPublicationDate(LocalDate date) {
-        String output = "";
-        for (Book book : getBooksCollection()) {
-            if (book.getPublicationDate().isAfter(date)) {
-                if (book instanceof Magazine) {
-                    Magazine magazine = (Magazine) book;
-                    output += magazine.toString();
-                } else if (book instanceof Encyclopedia) {
-
-                } else {
-                    output += book.toString();
-                }
-            }
-        }
+    public String showAllMaterialByPublicationDate(LocalDate date) {
+        return getMaterialCollection().stream()
+                .filter(material -> material.getPublicationDate().isAfter(date))
+                .map(material -> material.getTitle() + " " + material.getPublicationDate())
+                .collect(Collectors.joining(", "));
     }
 }
+

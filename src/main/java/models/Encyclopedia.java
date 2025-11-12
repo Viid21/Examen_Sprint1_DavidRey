@@ -2,11 +2,11 @@ package models;
 
 import java.time.LocalDate;
 
-public class Encyclopedia extends Book {
+public class Encyclopedia extends LibraryMaterial {
     int volume;
 
-    public Encyclopedia(String title, String author, LocalDate publicationDate, int volume) {
-        super(title, author, publicationDate);
+    public Encyclopedia(String title, String author, LocalDate publicationDate, String isbn, int volume) {
+        super(title, author, publicationDate, isbn);
         this.volume = volume;
     }
 
@@ -16,6 +16,6 @@ public class Encyclopedia extends Book {
 
     @Override
     public String toString() {
-        return super.toString() + " with volume " + getVolume();
+        return "Encyclopedia " + super.getTitle() + super.toString() + " with volume " + getVolume();
     }
 }
