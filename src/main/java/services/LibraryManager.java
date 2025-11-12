@@ -35,18 +35,20 @@ public class LibraryManager {
     }
 
     public String showAllBooksByPublicationDate(LocalDate date) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (Book book : getBooksCollection()) {
             if (book.getPublicationDate().isAfter(date)) {
                 if (book instanceof Magazine) {
                     Magazine magazine = (Magazine) book;
-                    output += magazine.toString();
+                    output.append(magazine.toString());
                 } else if (book instanceof Encyclopedia) {
-
+                    Encyclopedia encyclopedia = (Encyclopedia) book;
+                    output.append(encyclopedia.toString());
                 } else {
-                    output += book.toString();
+                    output.append(book.toString());
                 }
             }
         }
+        return output.toString();
     }
 }
